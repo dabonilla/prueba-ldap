@@ -14,11 +14,11 @@ function authenticateDN(username, password) {
       console.log("success")
       /*
       const opts = {
-        filter: '(|(cn=dabonilla2)(sn=guy))',
-        scope: 'base',
+        filter: '(|(cn=dabonilla3)(sn=gu3))',
+        scope: 'sub',
         attributes: ['sn','cn']
       };
-      client.search('ou=users,dc=arqsoft,dc=unal,dc=edu,dc=co', opts, (err, res) => {
+      client.search('cn=usuarios,dc=arqsoft,dc=unal,dc=edu,dc=co', opts, (err, res) => {
         if (err) {
           console.log("Error in search", err);
           
@@ -48,23 +48,46 @@ function authenticateDN(username, password) {
         });
       });
 */
-      
+
       const entry = {
-        cn: 'dabonilla3',
-        sn: 'guy3',
-        uid: 'nguy3',
-        mail: 'nguy3@example.org',
-        objectClass: 'inetOrgPerson'
+        objectClass: ['top', 'posixAccount', 'inetOrgPerson'],
+        cn: 'daniel112',
+        uid: 'daniel112',
+        uidNumber: '1000',
+        gidNumber: '1001',
+        homeDirectory: '/home/' + 'daniel112',
+        userPassword: '12345',
+        sn: 'New',
+        givenName: 'User'
       };
-      client.add(`cn=dabonilla3,ou=users,dc=arqsoft,dc=unal,dc=edu,dc=co`, entry, (err) => {
+
+      client.add(`cn=daniel112,cn=usuarios,dc=arqsoft,dc=unal,dc=edu,dc=co`, entry, (err) => {
         if (err) {
           console.log(err)
         } else {
           console.log("nueva entrada")
         }
       });
+
+
     }
   })
 }
 
-authenticateDN('cn=admin,dc=arqsoft,dc=unal,dc=edu,dc=co ', 'admin')
+function authenticateDN2(username, password) {
+  var client = ldap.createClient({
+    url: 'ldap://127.0.0.1:389'
+
+  })
+  client.bind(username, password, function (err) {
+    if (err) {
+      console.log("Error in conection2", err)
+    }
+    else {
+      console.log("success2")
+
+    }
+  })
+}
+
+authenticateDN2('cn=daniel112,cn=usuarios,dc=arqsoft,dc=unal,dc=edu,dc=co', '123453')
